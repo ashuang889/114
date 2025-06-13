@@ -1,6 +1,20 @@
-server:
-    build: ../
-    # image: fabulove:2.0.1  # 删除或注释掉这行
+version: "3.7"
+
+services:
+  mongo:
+    platform: "linux/amd64"
+    container_name: mongo
+    restart: always
+    image: mongo:4.4.7
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - appnet
+
+  server:
+    build: "../"
     container_name: docker_server
     restart: always
     environment:
@@ -15,3 +29,7 @@ server:
       - mongo
     networks:
       - appnet
+
+networks:
+  appnet:
+    driver: bridge
