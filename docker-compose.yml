@@ -1,1 +1,17 @@
-a
+server:
+    build: ../
+    # image: fabulove:2.0.1  # 删除或注释掉这行
+    container_name: docker_server
+    restart: always
+    environment:
+      FABU_DB_HOST: mongo
+      FABU_BASE_URL: http://3.27.146.254:9898/
+      FABU_UPLOAD_DIR: /fabu/upload
+    ports:
+      - "9898:9898"
+    volumes:
+      - ./upload:/fabu/upload
+    depends_on:
+      - mongo
+    networks:
+      - appnet
